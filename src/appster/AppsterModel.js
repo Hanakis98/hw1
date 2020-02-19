@@ -5,6 +5,8 @@ export default class AppsterModel {
 
         // THE WORK CURRENTLY BEING EDITED
         this.currentWork = null;
+
+        this.currentWorkName = null;
     }
 
     getRecentWork(workName) {
@@ -19,6 +21,19 @@ export default class AppsterModel {
     setView(initView) {
         this.view = initView;
     }
+
+    setCurrentWorkName(name){
+        this.currentWorkName = name;
+    }
+
+    setCurrentWork(work){
+        this.currentWork = work;
+    }
+
+    getCurrentWork(){
+        return this.currentWork;
+    }
+   
 
     goHome() {
         this.view.goToHomeScreen();
@@ -38,6 +53,8 @@ export default class AppsterModel {
 
             // CHANGE THE SCREEN
             this.view.goToEditScreen();
+            this.setCurrentWork(work)
+       
         }
     }
 
@@ -98,6 +115,9 @@ export default class AppsterModel {
         // AND THEN ADD IT TO THE TOP OF THE STACK
         this.prependWork(workToMove);
     }
+
+    //mymethod
+
 
     /**
      * Changes the name of the work being edited.

@@ -4,16 +4,16 @@ import GoLogoLoLogo from './GoLogoLoLogo.js'
 export default class GoLogoLoModel extends AppsterModel {
     constructor() {
         super();
-        this.currentWork = null;
+        this.currentWork = null; // should automatically be updated whenever appsterModel->editWork() is called
     }
 
     createNewWork(workName) {
         let newRandomText = new GoLogoLoText(workName);
-        return newRandomText;
     }
 
     loadWorkData(workToLoad) {
         console.log("load " + workToLoad.getName());
+        
     }
 
     makeColor(colorData) {
@@ -22,7 +22,6 @@ export default class GoLogoLoModel extends AppsterModel {
 
     buildAppWork(workArray, name) {
         let appWork = new GoLogoLoLogo();
-
         // FIND THE WORK DATA FROM THE JSON OBJECT
         for (let i = 0; i < workArray.length; i++) {
             let jsonWork = workArray[i];
@@ -38,8 +37,13 @@ export default class GoLogoLoModel extends AppsterModel {
                 appWork.setBorderThickness(jsonWork.border_thickness);
                 appWork.setPadding(jsonWork.padding);
                 appWork.setMargin(jsonWork.margin);
+
+                
             }
         }
+
+
+
 
         return appWork;
     }

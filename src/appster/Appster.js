@@ -50,6 +50,8 @@ export default class Appster {
 
         // AND SETUP THE APPSTER EVENT HANDLERS
         this.controller.registerAppsterEventHandlers();
+
+        this.controller.registerGoLogoLoEventHandlers();
     }
 
     loadJsonFile(testFilePath, callback) {

@@ -484,9 +484,9 @@ export default class AppsterView {
        if (!element)
            console.log("WHAT?");
        element.hidden = !show;
-       if (show)
+       if (show){
            console.log(element);
-
+       }
        // NOW HIDE FROM ALL THE CHILDREN
        if (element.hasChildNodes()) {
            for (let i = 0; i < element.childNodes.length; i++) {
@@ -523,4 +523,15 @@ export default class AppsterView {
        let dialog = document.getElementById(AppsterGUIId.MODAL_YES_NO_DIALOG);
        dialog.classList.add(AppsterGUIClass.IS_VISIBLE);
    }
+
+
+   showTextEditingModal() {
+    let dialog = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL);
+    dialog.classList.add(AppsterGUIClass.IS_VISIBLE);
+}
+
+    hideTextEditingModal(){
+        let dialog = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL);
+        dialog.classList.remove(AppsterGUIClass.IS_VISIBLE); 
+    }
 }

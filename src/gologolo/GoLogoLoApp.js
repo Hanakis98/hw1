@@ -12,7 +12,7 @@ class GoLogoLoApp extends Appster {
 // FIRST MAKE THE APP COMPONENTS
 let model = new GoLogoLoModel();
 let view = new GoLogoLoView();
-let controller = new GoLogoLoController();
+let controller = new GoLogoLoController(model, view);
 
 // MAKE THE APP AND LAUNCH IT
 let app = new GoLogoLoApp(model, view, controller);

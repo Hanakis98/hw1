@@ -1,8 +1,10 @@
 import {AppsterCallback, AppsterGUIId, AppsterHTML} from './AppsterConstants.js'
+import AppWork from './AppWork.js';
+import AppsterView from './AppsterView.js'
 
 export default class AppsterController {
     constructor() {
-        this.model = null;
+this.model = null;
     }
 
     setModel(initModel) {
@@ -24,9 +26,10 @@ export default class AppsterController {
 
         // AND SETUP THE CALLBACK FOR THE SPECIFIED EVENT TYPE
         if (control)
-            control.addEventListener(eventName, callback);
+            control.addEventListener(eventName, callback.bind(this));
     }
-
+ 
+ 
     registerAppsterEventHandlers() {
         // FIRST THE NEW WORK BUTTON ON THE HOME SCREEN
         this.registerEventHandler(AppsterGUIId.APPSTER_HOME_NEW_WORK_BUTTON, AppsterHTML.CLICK, this[AppsterCallback.APPSTER_PROCESS_CREATE_NEW_WORK]);
@@ -38,6 +41,8 @@ export default class AppsterController {
         // AND THE MODAL BUTTONS
         this.registerEventHandler(AppsterGUIId.DIALOG_YES_BUTTON, AppsterHTML.CLICK, this[AppsterCallback.APPSTER_PROCESS_CONFIRM_DELETE_WORK]);
         this.registerEventHandler(AppsterGUIId.DIALOG_NO_BUTTON, AppsterHTML.CLICK, this[AppsterCallback.APPSTER_PROCESS_CANCEL_DELETE_WORK]);
+
+
     }
 
     /**
@@ -86,13 +91,36 @@ export default class AppsterController {
      * This function is called when the user requests to create
      * new work.
      */
-    processCreateNewWork() {
+    processCreateNewWork = (event) => {
         console.log("processCreateNewWork");
-
-        // PROMPT FOR THE NAME OF THE NEW LIST
         
+        // PROMPT FOR THE NAME OF THE NEW LIST
+        var newName = window.prompt("What would like to name this?","Name");
+       
+        if(!newName){
+            return;
+        }
         // MAKE A BRAND NEW LIST
-        this.model.goList();
+        let newNameTrimmed = newName ? newName.trim() : "";
+       
+        if( newNameTrimmed.length < 1) {
+            window.alert("Your logo name should be at least one character long.");
+            return;
+        } 
+        
+        // if not null , a logo with this name was found in model -> return false
+        if(this.model.getRecentWork(newNameTrimmed)){
+            window.alert(`Sorry, a logo for this name already exists`);
+            return;
+
+        }
+        
+           
+        //get name, create new logo, and add to recentworks
+        let appWork = new AppWork(newNameTrimmed);
+        this.model.appendWork(appWork);
+
+        this.model.goHome();
     }
 
     /**
@@ -110,7 +138,9 @@ export default class AppsterController {
         let workName = clickedElement.workId;
         console.log(workName + " clicked");
 
+        
         // START EDITING THE SELECTED WORK
+        this.model.setCurrentWorkName(workName);
         this.model.editWork(workName);
     }
 
@@ -144,6 +174,8 @@ export default class AppsterController {
         // DELETE THE WORK
         this.model.removeWork(this.model.getWorkToEdit());
 
+
+
         // GO BACK TO THE HOME SCREEN
         this.model.goHome();
     }
@@ -155,6 +187,19 @@ export default class AppsterController {
      */
     processDeleteWork() {
         // VERIFY VIA A DIALOG BOX
-        window.todo.model.view.showDialog();
+        if(window.confirm("Are You Sure You Want To Delete?")){
+            console.log("Deleted");
+            var workToDelete = this.model.getRecentWork(this.model.currentWorkName);
+            if(!workToDelete){
+                console.log("Work couldn't be found. You have a BIG problem.");
+            }
+            this.model.removeWork(workToDelete);
+           this.processGoHome();
+
+        }
+        else
+        {
+            console.log("Not Deleted");
+        }        
     }
 }
