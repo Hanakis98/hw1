@@ -496,6 +496,11 @@ export default class AppsterView {
        }
    }
 
+   isHiding(element, show) {
+    let element2 = document.getElementById(element);
+    return element2.hidden;
+}
+
    /**
     * This method is for toggling the element in the DOM with the elementId id to
     * show it or hide it.
@@ -512,15 +517,15 @@ export default class AppsterView {
     * This method is for hiding the yes/no dialog.
     */
    hideDialog() {
-       let dialog = document.getElementById(AppsterGUIId.MODAL_YES_NO_DIALOG);
+       let dialog = document.getElementById(AppsterGUIId.APPSTER_YES_NO_MODAL);
        dialog.classList.remove(AppsterGUIClass.IS_VISIBLE);
    }
 
    /**
     * This method is for showing the yes/no dialog.
     */
-   showDialog() {
-       let dialog = document.getElementById(AppsterGUIId.MODAL_YES_NO_DIALOG);
+   showDialog= () =>{
+       let dialog = document.getElementById(AppsterGUIId.APPSTER_YES_NO_MODAL);
        dialog.classList.add(AppsterGUIClass.IS_VISIBLE);
    }
 

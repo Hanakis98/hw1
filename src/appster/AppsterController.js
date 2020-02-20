@@ -93,34 +93,51 @@ this.model = null;
      */
     processCreateNewWork = (event) => {
         console.log("processCreateNewWork");
-        
+
+        this.model.view.showTextEditingModal();
         // PROMPT FOR THE NAME OF THE NEW LIST
-        var newName = window.prompt("What would like to name this?","Name");
-       
-        if(!newName){
-            return;
-        }
-        // MAKE A BRAND NEW LIST
-        let newNameTrimmed = newName ? newName.trim() : "";
-       
-        if( newNameTrimmed.length < 1) {
-            window.alert("Your logo name should be at least one character long.");
-            return;
-        } 
-        
-        // if not null , a logo with this name was found in model -> return false
-        if(this.model.getRecentWork(newNameTrimmed)){
-            window.alert(`Sorry, a logo for this name already exists`);
-            return;
+        //var newName = window.prompt("What would like to name this?","Name");
+        //create new work
+ 
+            let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
+            let editB = document.getElementById("gologolo_edit_text_button");
 
-        }
-        
-           
-        //get name, create new logo, and add to recentworks
-        let appWork = new AppWork(newNameTrimmed);
-        this.model.appendWork(appWork);
+if(enterNameButton && this.model.view.isHiding("gologolo_edit_text_button")){
 
-        this.model.goHome();
+            enterNameButton.onclick=() => {
+ 
+                var textBox = document.getElementById("appster_text_input_modal_textfield");
+                var newName = textBox.value;
+
+                if(!newName){
+                    return;
+                }
+                // MAKE A BRAND NEW LIST
+                let newNameTrimmed = newName ? newName.trim() : "";
+               
+                if( newNameTrimmed.length < 1) {
+                    window.alert("Your logo name should be at least one character long.");
+                    return;
+                } 
+                
+                // if not null , a logo with this name was found in model -> return false
+                if(this.model.getRecentWork(newNameTrimmed)){
+                    window.alert(`Sorry, a logo for this name already exists`);
+                    return;
+        
+                }
+                
+                   
+                //get name, create new logo, and add to recentworks
+                let appWork = new AppWork(newNameTrimmed);
+                this.model.appendWork(appWork);
+                this.model.goHome();
+                this.model.view.hideTextEditingModal();
+        
+                //CONTINUE HERE
+            }
+}
+        
     }
 
     /**
@@ -187,7 +204,10 @@ this.model = null;
      */
     processDeleteWork() {
         // VERIFY VIA A DIALOG BOX
-        if(window.confirm("Are You Sure You Want To Delete?")){
+        this.model.view.showDialog();
+
+        let yesButton = document.getElementById("appster_yes_no_modal_yes_button");
+        yesButton.onclick=()=>{
             console.log("Deleted");
             var workToDelete = this.model.getRecentWork(this.model.currentWorkName);
             if(!workToDelete){
@@ -195,11 +215,16 @@ this.model = null;
             }
             this.model.removeWork(workToDelete);
            this.processGoHome();
+           this.model.view.hideDialog();
+
 
         }
-        else
-        {
+        let noButton = document.getElementById("appster_yes_no_modal_no_button");
+        noButton.onclick=()=>{
+            this.model.view.hideDialog();
+        }
+
             console.log("Not Deleted");
-        }        
+               
     }
 }

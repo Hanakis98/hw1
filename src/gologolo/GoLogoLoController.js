@@ -9,7 +9,25 @@ export default class GoLogoLoController
     }
     
     processEditText() {
-        this.model.updateText();
+        if(document.getElementById("gologolo_edit_text_button") && (this.model.view.isHiding("gologolo_edit_text_button" ) ==false)){
+            let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
+            enterNameButton.onclick=() => {
+ 
+                var textBox = document.getElementById("appster_text_input_modal_textfield");
+                var txt = textBox.value;
+
+                var work = this.model.getCurrentWork();
+
+                work.setText(txt);
+
+                 this.model.view.loadWork(work);
+                 this.model.view.hideTextEditingModal();
+
+                //CONTINUE HERE
+            }
+            
+     }    
+     
     }
 
 
@@ -26,7 +44,8 @@ export default class GoLogoLoController
         let editTextButton = document.getElementById(GoLogoLoGUIId.GOLOGOLO_EDIT_TEXT_BUTTON);
         editTextButton.addEventListener("click", function(){
             this.model.view.showTextEditingModal();
-            
+            this.processEditText();                
+             
         }.bind(this));
 
         if(document.getElementById("appster_text_input_modal_cancel_button")){
@@ -35,28 +54,8 @@ export default class GoLogoLoController
             this.model.view.hideTextEditingModal();
             
         }.bind(this));
+    }
 
-        if(document.getElementById("appster_text_input_modal_enter_button")){
-            let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
-            enterNameButton.addEventListener("click", function(){
- 
-                var textBox = document.getElementById("appster_text_input_modal_textfield");
-                var txt = textBox.value;
-
-                var work = this.model.getCurrentWork();
-
-                work.setText(txt)
-
-                 this.model.view.loadWork(work);
-                 this.model.view.hideTextEditingModal();
-                textBox.value="";
-
-                //CONTINUE HERE
-            }.bind(this));
-            
-     }     
-
- 
 
 
         let fontSizeSlider = document.getElementById(GoLogoLoGUIId.GOLOGOLO_FONT_SIZE_SLIDER);
@@ -131,5 +130,4 @@ export default class GoLogoLoController
 
     }
  
-}
 }
