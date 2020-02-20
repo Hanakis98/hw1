@@ -22,6 +22,7 @@ export default class GoLogoLoController
 
                  this.model.view.loadWork(work);
                  this.model.view.hideTextEditingModal();
+                 textBox.value="";
 
                 //CONTINUE HERE
             }

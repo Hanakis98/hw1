@@ -100,9 +100,9 @@ this.model = null;
         //create new work
  
             let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
-            let editB = document.getElementById("gologolo_edit_text_button");
+            let editB = document.getElementById("appster_edit_trash");
 
-if(enterNameButton && this.model.view.isHiding("gologolo_edit_text_button")){
+            if(enterNameButton && this.model.view.isHiding("appster_edit_trash")){
 
             enterNameButton.onclick=() => {
  
@@ -133,7 +133,8 @@ if(enterNameButton && this.model.view.isHiding("gologolo_edit_text_button")){
                 this.model.appendWork(appWork);
                 this.model.goHome();
                 this.model.view.hideTextEditingModal();
-        
+                textBox.value="";
+
                 //CONTINUE HERE
             }
 }
