@@ -94,35 +94,48 @@ this.model = null;
     processCreateNewWork = (event) => {
         console.log("processCreateNewWork");
 
+
         this.model.view.showTextEditingModal();
         // PROMPT FOR THE NAME OF THE NEW LIST
         //var newName = window.prompt("What would like to name this?","Name");
         //create new work
  
-            let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
-            let editB = document.getElementById("appster_edit_trash");
+            let enterNameButton = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_ENTER_BUTTON);
+            var header = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_HEADER);
+            header.innerHTML=" New Logo";
+            header.style.fontSize="18px";
 
-            if(enterNameButton && this.model.view.isHiding("appster_edit_trash")){
+            var footer = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_FRAME).lastChild;
+            if(footer)
+            footer.innerHTML="Enter the name for your New Logo";
+
+            var section = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_SECTION).firstChild;
+            section.innerHTML="Enter Name";
+
+            if(enterNameButton && this.model.view.isHiding(AppsterGUIId.APPSTER_EDIT_TRASH)){
 
             enterNameButton.onclick=() => {
  
-                var textBox = document.getElementById("appster_text_input_modal_textfield");
+                var textBox = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_TEXTFIELD);
                 var newName = textBox.value;
 
                 if(!newName){
-                    return;
+                    newName=""
                 }
                 // MAKE A BRAND NEW LIST
                 let newNameTrimmed = newName ? newName.trim() : "";
                
-                if( newNameTrimmed.length < 1) {
-                    window.alert("Your logo name should be at least one character long.");
+                if( newNameTrimmed.length < 1 ) {
+
+                    header.innerHTML="Your name should be at least one character long.";
+                    header.style.fontSize="12px";
                     return;
                 } 
                 
                 // if not null , a logo with this name was found in model -> return false
                 if(this.model.getRecentWork(newNameTrimmed)){
-                    window.alert(`Sorry, a logo for this name already exists`);
+                    header.innerHTML="Sorry, a logo for this name already exists";
+                    header.style.fontSize="12px";
                     return;
         
                 }
@@ -133,7 +146,6 @@ this.model = null;
                 this.model.appendWork(appWork);
                 this.model.goHome();
                 this.model.view.hideTextEditingModal();
-                textBox.value="";
 
                 //CONTINUE HERE
             }

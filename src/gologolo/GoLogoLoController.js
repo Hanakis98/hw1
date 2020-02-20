@@ -1,5 +1,6 @@
 import AppsterController from '../appster/AppsterController.js'
 import {GoLogoLoGUIId} from './GoLogoLoConstants.js'
+import { AppsterGUIId } from '../appster/AppsterConstants.js';
 //import { worker } from 'cluster';
 
 export default class GoLogoLoController
@@ -9,8 +10,26 @@ export default class GoLogoLoController
     }
     
     processEditText() {
-        if(document.getElementById("gologolo_edit_text_button") && (this.model.view.isHiding("gologolo_edit_text_button" ) ==false)){
-            let enterNameButton = document.getElementById("appster_text_input_modal_enter_button");
+        this.model.view.showTextEditingModal();
+        if(document.getElementById(GoLogoLoGUIId.GOLOGOLO_EDIT_TEXT_BUTTON
+            ) && (this.model.view.isHiding(GoLogoLoGUIId.GOLOGOLO_EDIT_TEXT_BUTTON
+                ) ==false)){
+            let enterNameButton = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_ENTER_BUTTON);
+
+            var header = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_HEADER);
+            header.innerHTML="Edit Text Screen";
+            header.style.fontSize="12px";
+
+            var footer = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_FRAME).lastChild;
+            if(footer)
+            footer.innerHTML="Enter the text for your logo design";
+
+            var section = document.getElementById(AppsterGUIId.APPSTER_TEXT_INPUT_MODAL_SECTION).firstChild;
+            section.innerHTML="Edit Text";
+
+
+
+
             enterNameButton.onclick=() => {
  
                 var textBox = document.getElementById("appster_text_input_modal_textfield");
@@ -22,7 +41,6 @@ export default class GoLogoLoController
 
                  this.model.view.loadWork(work);
                  this.model.view.hideTextEditingModal();
-                 textBox.value="";
 
                 //CONTINUE HERE
             }
@@ -44,7 +62,6 @@ export default class GoLogoLoController
         this modal should also be used for naming your logo once you create it */
         let editTextButton = document.getElementById(GoLogoLoGUIId.GOLOGOLO_EDIT_TEXT_BUTTON);
         editTextButton.addEventListener("click", function(){
-            this.model.view.showTextEditingModal();
             this.processEditText();                
              
         }.bind(this));
