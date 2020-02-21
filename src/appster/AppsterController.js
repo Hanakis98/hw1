@@ -145,8 +145,10 @@ this.model = null;
                 let appWork = new AppWork(newNameTrimmed);
                 this.model.appendWork(appWork);
                 this.model.view.hideTextEditingModal();
-            this.model.setCurrentWorkName=  newNameTrimmed;
-            this.model.editWork(newNameTrimmed);                //CONTINUE HERE
+
+
+
+            this.processEditWork2(newNameTrimmed);        //CONTINUE HERE
             }
 }
         
@@ -172,7 +174,17 @@ this.model = null;
         this.model.setCurrentWorkName(workName);
         this.model.editWork(workName);
     }
+    processEditWork2 = (nameWork) => {
+        console.log("processEditWork");
 
+        // GET THE WORK THAT THE USER WANTS TO LOAD
+     
+
+        
+        // START EDITING THE SELECTED WORK
+        this.model.setCurrentWorkName(nameWork);
+        this.model.editWork(nameWork);
+    }
     /**
      * This function responds to when the user clicks the No
      * button in the popup dialog after having requested to delete
