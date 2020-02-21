@@ -82,7 +82,7 @@ this.model = null;
         this.model.goHome();
     }
 
-    processGoEdit(workToEdit) {
+    processGoEdit=(workToEdit)=> {
         console.log("processGoEdit");
         this.model.goEdit(workToEdit);
     }
@@ -144,10 +144,9 @@ this.model = null;
                 //get name, create new logo, and add to recentworks
                 let appWork = new AppWork(newNameTrimmed);
                 this.model.appendWork(appWork);
-                this.model.goHome();
                 this.model.view.hideTextEditingModal();
-
-                //CONTINUE HERE
+            this.model.setCurrentWorkName=  newNameTrimmed;
+            this.model.editWork(newNameTrimmed);                //CONTINUE HERE
             }
 }
         
