@@ -93,6 +93,7 @@ export default class GoLogoLoController
         
 
         
+        
         let backgroundColorPicker = document.getElementById(GoLogoLoGUIId.GOLOGOLO_BACKGROUND_COLOR_PICKER);
         backgroundColorPicker.oninput = function(e){
             var work = this.model.getCurrentWork();
